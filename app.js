@@ -46,7 +46,9 @@ function isAuthenticated(req, res, next) {
 
 // To indicate where are the controllers
 const userController = require('./controllers/userController');
+const productController = require('./controllers/productController');
 const user = require('./models/user');
+const product = require('./models/product');
 
 app.use((req, res, next) => {
     console.log(`Request received: ${req.method} ${req.url}`);
@@ -63,8 +65,6 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send("Something went wrong!");
 });
-
-
 
 app.listen(3000, () => {
     console.log("Server running on http://localhost:3000/");
