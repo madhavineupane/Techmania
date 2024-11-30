@@ -9,37 +9,14 @@ module.exports = {
         const errorMessage = req.session.errorMessage || null;
         req.session.errorMessage = null;
         if (username) {
-            return res.redirect('/views/options.html');
+            const filePath = path.join(__dirname, '../views', 'options.html');
+            return res.sendFile(filePath);
+        } else {
+                // Renderiza la página de inicio solo si no hay sesión activa
+                return res.render('index.ejs', { errorMessage: errorMessage, successMessage: null });
         }
-        return res.render('index.ejs', { errorMessage: errorMessage , successMessage: null });
-    },
-
-    // Method to get other web pages
-    otherfiles: function(req, res) {
-        console.log("Other files ");
-        const filePath = path.join(__dirname,"../",req.params.file);
-        console.log(filePath);
-        return res.sendFile(filePath,function(error){
-            if(error){
-                return res.status(404).send("File Not Found!"); 
-            }
-        })
-    },
-
-    otherpages: function(req, res) {
-        console.log("Other pages ");
-
-
-        const filePath = path.join(__dirname,"../",req.params.folder, req.params.file);
-        console.log(filePath);
-        return res.sendFile(filePath,function(error){
-            if(error){
-                return res.status(404).send("File Not Found!"); 
-            }
-        })
     },
     
-
     validation: async function(req,res){
 
         const { uName, password1, password2, operation } = req.body;
